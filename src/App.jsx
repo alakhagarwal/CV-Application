@@ -199,21 +199,23 @@ function ExperienceForm({
   );
 }
 
-function EduItem({ edu,deleteeduItem }) {
+function EduItem({ edu, deleteeduItem }) {
   return (
     <div
       className="border border-slate-300 rounded-lg p-2 flex justify-between"
       style={{ backgroundColor: "#d5d9eb" }}
     >
       <div className="eduDetail">
-        <h3 className="text-[1 rem] font-semibold text-slate-800">{edu.degree}</h3>
+        <h3 className="text-[1 rem] font-semibold text-slate-800">
+          {edu.degree}
+        </h3>
         <p className="text-slate-600">{edu.school}</p>
       </div>
 
       <button
         className="bg-red-500 text-[1rem] text-white px-4 rounded hover:bg-red-600 transition-colors hover:cursor-pointer"
         onClick={() => {
-         deleteeduItem(edu);
+          deleteeduItem(edu);
         }}
       >
         Delete
@@ -222,26 +224,94 @@ function EduItem({ edu,deleteeduItem }) {
   );
 }
 
-function ExpItem({ exp,deleteexpItem }) {
+function ExpItem({ exp, deleteexpItem }) {
   return (
     <div
       className="border border-slate-300 rounded-lg p-2 flex justify-between"
       style={{ backgroundColor: "#d5d9eb" }}
     >
       <div className="expDetail">
-        <h3 className="text-[1 rem] font-semibold text-slate-800">{exp.position}</h3>
+        <h3 className="text-[1 rem] font-semibold text-slate-800">
+          {exp.position}
+        </h3>
         <p className="text-slate-600">{exp.company}</p>
       </div>
 
       <button
         className="bg-red-500 text-[1rem] text-white px-4 rounded hover:bg-red-600 transition-colors hover:cursor-pointer"
         onClick={() => {
-         deleteexpItem(exp);
+          deleteexpItem(exp);
         }}
       >
         Delete
       </button>
     </div>
+  );
+}
+
+function DetailForm({ detailForm, handleDetailChange }) {
+  return (
+    <form
+      onSubmit={(e) =>{
+        e.preventDefault();
+      }}
+      className="personalDetails flex flex-col gap-5 mt-5 p-4 rounded-lg "
+      style={{ backgroundColor: "#f7fafc" }}
+    >
+      <h2 className="text-2xl">Personal Details</h2>
+      <label className="flex flex-col text-slate-800 font-medium">
+        Full Name
+        <input
+          type="text"
+          name="fullName"
+          value={detailForm.fullName}
+          onChange={(e) => {
+            handleDetailChange(e);
+          }}
+          className="p-2 rounded border border-slate-300 mt-1 focus:outline-none focus:ring-2 focus:ring-violet-400"
+          placeholder="Enter your full name"
+        />
+      </label>
+      <label className="flex flex-col text-slate-800 font-medium">
+        Email
+        <input
+          type="email"
+          name="email"
+          value={detailForm.email}
+          onChange={(e) => {
+            handleDetailChange(e);
+          }}
+          className="p-2 rounded border border-slate-300 mt-1 focus:outline-none focus:ring-2 focus:ring-violet-400"
+          placeholder="Enter your email"
+        />
+      </label>
+      <label className="flex flex-col text-slate-800 font-medium">
+        Phone
+        <input
+          type="tel"
+          name="phone"
+          value={detailForm.phone}
+          onChange={(e) => {
+            handleDetailChange(e);
+          }}
+          className="p-2 rounded border border-slate-300 mt-1 focus:outline-none focus:ring-2 focus:ring-violet-400"
+          placeholder="Enter your phone number"
+        />
+      </label>
+      <label className="flex flex-col text-slate-800 font-medium">
+        Address
+        <input
+          type="text"
+          name="address"
+          value={detailForm.address}
+          onChange={(e) => {
+            handleDetailChange(e);
+          }}
+          className="p-2 rounded border border-slate-300 mt-1 focus:outline-none focus:ring-2 focus:ring-violet-400"
+          placeholder="Enter your address"
+        />
+      </label>
+    </form>
   );
 }
 
@@ -252,6 +322,19 @@ function App() {
   const [address, setAddress] = useState("");
   const [eduList, setEduList] = useState([]);
   const [expList, setExpList] = useState([]);
+  const [detailForm, setDetailForm] = useState({
+    fullName: "",
+    email: "",
+    phone: "",
+    address: "",
+  });
+
+  const handleDetailChange = (e) => {
+    const { name, value } = e.target;
+    setDetailForm((prev) => ({ ...prev, [name]: value }));
+  };
+
+  console.log(detailForm);
 
   const [showEduForm, setShowEduForm] = useState(false);
   const [eduForm, setEduForm] = useState({
@@ -316,23 +399,23 @@ function App() {
     setShowExpForm(false);
   };
 
-  const deleteeduItem  = (edu) => {
+  const deleteeduItem = (edu) => {
     const index = eduList.indexOf(edu);
     if (index > -1) {
       eduList.splice(index, 1);
       setEduList([...eduList]);
     }
     console.log(eduList);
-  }
+  };
 
-  const deleteexpItem = (exp) => {  
+  const deleteexpItem = (exp) => {
     const index = expList.indexOf(exp);
     if (index > -1) {
       expList.splice(index, 1);
       setExpList([...expList]);
     }
     console.log(expList);
-  }
+  };
 
   return (
     <>
@@ -348,57 +431,10 @@ function App() {
 
           {/* PERSONAL DETAILS FORM STARTS HERE */}
 
-          <form
-            onSubmit={(e) => e.preventDefault()}
-            className="personalDetails flex flex-col gap-5 mt-5 p-4 rounded-lg "
-            style={{ backgroundColor: "#f7fafc" }}
-          >
-            <h2 className="text-2xl">Personal Details</h2>
-            <label className="flex flex-col text-slate-800 font-medium">
-              Full Name
-              <input
-                type="text"
-                name="fullName"
-                value={name}
-                onChange={(e) => setName(e.target.value)}
-                className="p-2 rounded border border-slate-300 mt-1 focus:outline-none focus:ring-2 focus:ring-violet-400"
-                placeholder="Enter your full name"
-              />
-            </label>
-            <label className="flex flex-col text-slate-800 font-medium">
-              Email
-              <input
-                type="email"
-                name="email"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-                className="p-2 rounded border border-slate-300 mt-1 focus:outline-none focus:ring-2 focus:ring-violet-400"
-                placeholder="Enter your email"
-              />
-            </label>
-            <label className="flex flex-col text-slate-800 font-medium">
-              Phone
-              <input
-                type="tel"
-                name="phone"
-                value={phone}
-                onChange={(e) => setPhone(e.target.value)}
-                className="p-2 rounded border border-slate-300 mt-1 focus:outline-none focus:ring-2 focus:ring-violet-400"
-                placeholder="Enter your phone number"
-              />
-            </label>
-            <label className="flex flex-col text-slate-800 font-medium">
-              Address
-              <input
-                type="text"
-                name="address"
-                value={address}
-                onChange={(e) => setAddress(e.target.value)}
-                className="p-2 rounded border border-slate-300 mt-1 focus:outline-none focus:ring-2 focus:ring-violet-400"
-                placeholder="Enter your address"
-              />
-            </label>
-          </form>
+          <DetailForm
+            detailForm={detailForm}
+            handleDetailChange={handleDetailChange}
+          />
 
           {/* PERSONAL DETAILS FORM ENDS HERE  */}
 
@@ -429,7 +465,9 @@ function App() {
             {/* ADD EDUCATION ENDS  */}
 
             {eduList.map((edu, index) => {
-              return <EduItem key={index} edu={edu} deleteeduItem = {deleteeduItem} />;
+              return (
+                <EduItem key={index} edu={edu} deleteeduItem={deleteeduItem} />
+              );
             })}
           </div>
           {/* EDUCATION DETAILS FORM ENDS HERE */}
@@ -461,7 +499,9 @@ function App() {
             {/* ADD EXPERIENCE ENDS  */}
 
             {expList.map((exp, index) => {
-              return <ExpItem key={index} exp={exp} deleteexpItem = {deleteexpItem} />;
+              return (
+                <ExpItem key={index} exp={exp} deleteexpItem={deleteexpItem} />
+              );
             })}
           </div>
           {/* EXPERIENCE DETAILS FORM ENDS HERE  */}
