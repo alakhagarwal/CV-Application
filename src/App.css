@@ -14,7 +14,8 @@ body {
   gap: 2vw;
 }
 
-.personalDetails {
+.personalDetails,.educationDetails,.experienceDetails {
   border: 2px solid rgb(232, 230, 230);
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  background-color: #f7fafc ;
 }
