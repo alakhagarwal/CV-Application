@@ -203,7 +203,7 @@ function EduItem({ edu,deleteeduItem }) {
   return (
     <div
       className="border border-slate-300 rounded-lg p-2 flex justify-between"
-      style={{ backgroundColor: "#f7fafc" }}
+      style={{ backgroundColor: "#d5d9eb" }}
     >
       <div className="eduDetail">
         <h3 className="text-[1 rem] font-semibold text-slate-800">{edu.degree}</h3>
@@ -214,6 +214,29 @@ function EduItem({ edu,deleteeduItem }) {
         className="bg-red-500 text-[1rem] text-white px-4 rounded hover:bg-red-600 transition-colors hover:cursor-pointer"
         onClick={() => {
          deleteeduItem(edu);
+        }}
+      >
+        Delete
+      </button>
+    </div>
+  );
+}
+
+function ExpItem({ exp,deleteexpItem }) {
+  return (
+    <div
+      className="border border-slate-300 rounded-lg p-2 flex justify-between"
+      style={{ backgroundColor: "#d5d9eb" }}
+    >
+      <div className="expDetail">
+        <h3 className="text-[1 rem] font-semibold text-slate-800">{exp.position}</h3>
+        <p className="text-slate-600">{exp.company}</p>
+      </div>
+
+      <button
+        className="bg-red-500 text-[1rem] text-white px-4 rounded hover:bg-red-600 transition-colors hover:cursor-pointer"
+        onClick={() => {
+         deleteexpItem(exp);
         }}
       >
         Delete
@@ -300,6 +323,15 @@ function App() {
       setEduList([...eduList]);
     }
     console.log(eduList);
+  }
+
+  const deleteexpItem = (exp) => {  
+    const index = expList.indexOf(exp);
+    if (index > -1) {
+      expList.splice(index, 1);
+      setExpList([...expList]);
+    }
+    console.log(expList);
   }
 
   return (
@@ -427,6 +459,10 @@ function App() {
             )}
 
             {/* ADD EXPERIENCE ENDS  */}
+
+            {expList.map((exp, index) => {
+              return <ExpItem key={index} exp={exp} deleteexpItem = {deleteexpItem} />;
+            })}
           </div>
           {/* EXPERIENCE DETAILS FORM ENDS HERE  */}
         </div>
