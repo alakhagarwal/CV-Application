@@ -78,13 +78,13 @@ function EducationForm({
       <div className="flex gap-3 mt-2">
         <button
           type="submit"
-          className="bg-violet-500 text-white px-4 py-2 rounded hover:bg-violet-600"
+          className="bg-violet-500 text-white px-4 py-2 rounded hover:bg-violet-600 hover:cursor-pointer"
         >
           Add
         </button>
         <button
           type="button"
-          className="bg-slate-300 text-slate-800 px-4 py-2 rounded hover:bg-slate-400"
+          className="bg-slate-300 text-slate-800 px-4 py-2 rounded hover:bg-slate-400 hover:cursor-pointer"
           onClick={() => handleshowEduForm()}
         >
           Cancel
@@ -183,13 +183,13 @@ function ExperienceForm({
       <div className="flex gap-3 mt-2">
         <button
           type="submit"
-          className="bg-violet-500 text-white px-4 py-2 rounded hover:bg-violet-600"
+          className="bg-violet-500 text-white px-4 py-2 rounded hover:bg-violet-600 hover:cursor-pointer"
         >
           Save
         </button>
         <button
           type="button"
-          className="bg-slate-300 text-slate-800 px-4 py-2 rounded hover:bg-slate-400"
+          className="bg-slate-300 text-slate-800 px-4 py-2 rounded hover:bg-slate-400 hover:cursor-pointer"
           onClick={handleshowExpForm}
         >
           Cancel
@@ -252,7 +252,7 @@ function ExpItem({ exp, deleteexpItem }) {
 function DetailForm({ detailForm, handleDetailChange }) {
   return (
     <form
-      onSubmit={(e) =>{
+      onSubmit={(e) => {
         e.preventDefault();
       }}
       className="personalDetails flex flex-col gap-5 mt-5 p-4 rounded-lg "
@@ -419,13 +419,10 @@ function App() {
 
   return (
     <>
-      <div className="my-container max-w-[1300px] mx-auto bg-slate-50 h-screen">
+      <div className="my-container max-w-[1400px] mx-auto bg-slate-50 h-screen">
         {/* LEFT SECTION START HERE */}
         <div className="inputForms overflow-auto bg-white p-4.5 shadow-md">
-          <h1
-            className="text-3xl text-center mt-2.5 font-bold"
-            style={{ color: "rgb(45, 55, 72)" }}
-          >
+          <h1 className="text-[3rem] text-center mt-2.5 font-bold text-violet-500">
             CV Builder
           </h1>
 
@@ -505,6 +502,97 @@ function App() {
             })}
           </div>
           {/* EXPERIENCE DETAILS FORM ENDS HERE  */}
+        </div>
+        {/* LEFT SECTION ENDS HERE */}
+
+        {/* RIGHT SECTION STARTS HERE */}
+
+        <div className="cvPreview overflow-auto pt-13 pb-13 pl-8 pr-8  ">
+          <div className="content p-10 rounded-lg flex flex-col gap-5 items-center min-h-[140vh]">
+            {/* Personal details starts */}
+            <div className="displayPersonalDetails p-5 mt-5 mb- flex flex-col gap-2 items-center border-b-4 border-b-gray-200 w-[100%]">
+              <h1 className="text-4xl font-bold text-slate-800">
+                {detailForm.fullName || "Your Name"}
+              </h1>
+              <div className="contactInfo flex gap-2">
+                <p className="text-slate-600">{detailForm.email || "Email"}</p>
+                <span> &#8226;</span>
+                <p className="text-slate-600">{detailForm.phone || "Phone"}</p>
+                &#8226;
+                <p className="text-slate-600">
+                  {detailForm.address || "Address"}
+                </p>
+              </div>
+            </div>
+            {/* personal details ends here */}
+            {/* proffesional experience starts here */}
+            <div className="displayExp w-[100%] ">
+              {expList.length != 0 && (
+                <div className="text-[1.2rem] font-[550] text-left p-2 border-b-2 border-gray-200 mb-1">
+                  PROFESSIONAL EXPERIENCE
+                </div>
+              )}
+
+              {expList.map((exp, index) => {
+                return (
+                  <div key={index} className="expBox p-2">
+                    <div className="section1 flex justify-between">
+                      <div className="box2">
+                        <h3 className="text-[1.3rem] font-[550]">
+                          {exp.position}
+                        </h3>
+                        <p className="text-[1.1rem] font-light">
+                          {exp.company}
+                        </p>
+                      </div>
+
+                      <div className="box2">
+                        <p className="text-gray-600">
+                          {exp.startDate} - {exp.endDate}
+                        </p>
+                        <p className="font-medium font-mono">{exp.location}</p>
+                      </div>
+                    </div>
+
+                    <div className="expDesc mt-2 font-extralight text-gray-600">
+                      {exp.description}
+                    </div>
+                  </div>
+                );
+              })}
+            </div>
+            {/* proffesional experience ends here */}
+
+            <div className="displayEdu w-[100%] ">
+              {eduList.length != 0 && (
+                <div className="text-[1.2rem] font-[550] text-left p-2 border-b-2 border-gray-200 mb-1">
+                  EDUCATION
+                </div>
+              )}
+
+              {eduList.map((exp, index) => {
+                return (
+                  <div key={index} className="eduBox p-2">
+                    <div className="section1 flex justify-between">
+                      <div className="box2">
+                        <h3 className="text-[1.3rem] font-[550]">
+                          {exp.degree}
+                        </h3>
+                        <p className="text-[1.1rem] font-light">{exp.school}</p>
+                      </div>
+
+                      <div className="box2">
+                        <p className="text-gray-600">
+                          {exp.startDate} - {exp.endDate}
+                        </p>
+                        <p className="font-medium font-mono ">{exp.location}</p>
+                      </div>
+                    </div>
+                  </div>
+                );
+              })}
+            </div>
+          </div>
         </div>
       </div>
     </>
